@@ -1,0 +1,149 @@
+.auth-container {
+  min-height: 100vh;
+  padding: 6rem 2rem 2rem;
+  background: linear-gradient(to right, red, orange);
+}
+
+.info-section {
+  max-width: 800px;
+  margin: 0 auto 2rem;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.info-section h1 {
+  color: #333;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+}
+
+.info-section p {
+  color: #666;
+  line-height: 1.8;
+  font-size: 1.1rem;
+}
+
+.auth-form-container {
+  max-width: 500px;
+  margin: 2rem auto;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 2.5rem;
+  border-radius: 15px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.auth-form-container h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+}
+
+.auth-form-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-form-container label {
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  margin-top: 1rem;
+}
+
+.auth-form-container input {
+  padding: 0.8rem;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.auth-form-container input:focus {
+  outline: none;
+  border-color: orange;
+}
+
+.auth-form-container button {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: orange;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.auth-form-container button:hover {
+  background-color: orangered;
+  transform: translateY(-2px) scale(1.05);
+}
+
+.auth-switch {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: #666;
+}
+
+.auth-switch a {
+  color: orangered;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.auth-switch a:hover {
+  text-decoration: underline;
+  color: red;
+}
+
+.features-section {
+  max-width: 800px;
+  margin: 2rem auto;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.features-section h1 {
+  color: #333;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+
+.features-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.features-section li {
+  color: #666;
+  padding: 0.8rem 0;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  border-bottom: 1px solid #ddd;
+}
+
+.features-section li:last-child {
+  border-bottom: none;
+}
+
+@media (max-width: 768px) {
+  .auth-container {
+    padding: 5rem 1rem 1rem;
+  }
+
+  .auth-form-container {
+    padding: 1.5rem;
+  }
+
+  .info-section,
+  .features-section {
+    padding: 1.5rem;
+  }
+}

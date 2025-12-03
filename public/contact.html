@@ -1,0 +1,72 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+    <link rel="stylesheet" href="style.css">
+ </head>
+ <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">
+            <a href="#">Expense Tracker</a>
+        </div>
+        <div>
+            <h1><marquee>WELCOME TO EXPENSE TRACKER</marquee></h1>
+        </div>
+        <ul class="nav-links">
+            <li><a href="login.html">Dashboard</a></li>
+            <li><a href="login.html">Logout</a></li>
+            <li><a href="daily_expense.html">Daily Expense</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+    </nav>
+    <!-- Contact Us Section (Moved to the End) -->
+    <center>
+    <section id="contact">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <input type="text" id="contact-name" placeholder="Your Name">
+            <input type="email" id="contact-email" placeholder="Your Email">
+            <textarea id="contact-message" rows="5" placeholder="Your Message"></textarea>
+            <button onclick="sendMessage()">Send Message</button>
+        </div>
+    </section>
+   </center>
+    <script src="script.js"></script>
+    
+    <div id="footer-placeholder"></div>
+
+  <script>
+    // Function to load the footer into the page
+    function loadFooter() {
+      fetch('footer.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('footer-placeholder').innerHTML = data;
+        })
+        .catch(error => console.error('Error loading the footer:', error));
+    }
+
+    // Call the loadFooter function on page load
+    window.onload = loadFooter;
+
+    // Back to top button functionality
+    let mybutton = document.getElementById("backToTopBtn");
+
+    window.onscroll = function() {
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        mybutton.style.display = "block";
+      } else {
+        mybutton.style.display = "none";
+      }
+    };
+
+    function scrollToTop() {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    }
+  </script>
+</body>
+ </html>

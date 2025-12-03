@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login page</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- Navigation Bar -->
+<nav class="navbar">
+  <div class="logo">
+    <a href="#">Expense Tracker</a>
+  </div>
+  <div>
+    <h1><marquee>WELCOME TO EXPENSE TRACKER</marquee></h1>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#">Dashboard</a></li>
+    <li><a href="login.html">Login</a></li>
+    <li><a href="signup.html">Sign Up</a></li>
+    <li><a href="#">Daily Expense</a></li>
+    <li><a href="#">Contact Us</a></li>
+  </ul>
+</nav>
+<br><br>
+
+<section class="container">
+  <h1>📌 About the Expense Tracker</h1>
+  <p>
+    The <strong>Daily Expense Tracker</strong> is a simple and efficient tool designed to help users manage their daily expenses, set budgets, and keep track of spending history.
+  </p>    
+  <div class="container" id="login-container">
+    <h1>Login to proceed</h1>
+    <label for="username">Username:</label>
+    <input type="text" id="username" placeholder="Enter username">
+    <label for="password">Password:</label>
+    <input type="password" id="password" placeholder="Enter password">
+    <button onclick="login()">Login</button>
+    <h3>Don't you have an account?</h3>
+    <button>
+      <a href="signup.html" style="text-decoration: none; color: azure;">Signup</a>
+    </button>
+  </div>
+</section>
+
+<center>
+<!-- Key Features Section -->
+<section class="container">
+  <h1>✨ Key Features</h1>
+  <ul>
+    <li>✅ <strong>User Authentication</strong> – Secure login system with username and password.</li>
+    <li>✅ <strong>Set Monthly Budget</strong> – Users can define a monthly budget to track expenses.</li>
+    <li>✅ <strong>Expense Tracking</strong> – Easily add and manage daily expenses.</li>
+    <li>✅ <strong>Expense Categories</strong> – Food, Transport, Bills, Shopping, and Others.</li>
+    <li>✅ <strong>Expense History</strong> – View a complete list of past expenses.</li>
+    <li>✅ <strong>Total Spending Calculation</strong> – Automatically calculates the total amount spent.</li>
+    <li>✅ <strong>Delete Expenses</strong> – Remove unnecessary expenses from the history.</li>
+    <li>✅ <strong>Logout Functionality</strong> – Securely log out after tracking expenses.</li>
+    <li>✅ <strong>Mobile-Friendly</strong> – Works on both desktop and mobile browsers.</li>
+  </ul>
+</section>
+
+<!-- How to Use Section -->
+<section class="container">
+  <h1>📝 How to Use the Expense Tracker</h1>
+  <ol>
+    <li><strong>Login to Your Account:</strong> Enter your username and password on the login page and click "Login".</li>
+    <li><strong>Set Your Monthly Budget:</strong> Enter your budget amount and click "Set Budget" to save it.</li>
+    <li><strong>Add an Expense:</strong> Provide the expense name, amount, select a category, and click "Add Expense".</li>
+    <li><strong>View and Manage Expense History:</strong> Check all past expenses in a table format, and delete unwanted entries.</li>
+    <li><strong>Logout:</strong> Click the "Logout" button to securely log out of your account.</li>
+  </ol>
+</section>
+
+<script src="script.js"></script>
+<!-- Back to Top Button -->
+<button onclick="topFunction()" id="backToTop" title="Go to top">↑</button>
+
+<script>
+  // When the user scrolls down 100px, show the button
+  window.onscroll = function() {scrollFunction()};
+
+  function scrollFunction() {
+    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+      document.getElementById("backToTop").style.display = "block";
+    } else {
+      document.getElementById("backToTop").style.display = "none";
+    }
+  }
+
+  // When the user clicks on the button, scroll to the top
+  function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
+</script>
+<div id="footer-placeholder"></div>
+
+  <script>
+    // Function to load the footer into the page
+    function loadFooter() {
+      fetch('footer.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('footer-placeholder').innerHTML = data;
+        })
+        .catch(error => console.error('Error loading the footer:', error));
+    }
+
+    // Call the loadFooter function on page load
+    window.onload = loadFooter;
+
+    // Back to top button functionality
+    let mybutton = document.getElementById("backToTopBtn");
+
+    window.onscroll = function() {
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        mybutton.style.display = "block";
+      } else {
+        mybutton.style.display = "none";
+      }
+    };
+
+    function scrollToTop() {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    }
+  </script>
+</body>
+</html>

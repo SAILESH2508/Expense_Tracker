@@ -1,0 +1,118 @@
+/* Footer Styles */
+.footer {
+  background-color: #f1f1f1;
+  padding: 40px 0;
+  text-align: center;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.footer-left {
+  flex: 1;
+  min-width: 250px;
+}
+
+.footer-left h3 {
+  margin: 0;
+  color: #333;
+  font-size: 28px;
+}
+
+.footer-left p {
+  font-size: 16px;
+  color: #666;
+  margin: 10px 0;
+}
+
+.footer-right {
+  flex: 1;
+  min-width: 250px;
+}
+
+.footer-right ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-right ul li {
+  display: inline;
+  margin: 0 15px;
+}
+
+.footer-right ul li a {
+  color: #333;
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.footer-right ul li a:hover {
+  color: #0073e6;
+}
+
+/* Social Media Icons */
+.social-icons {
+  margin-top: 15px;
+}
+
+.social-icons a {
+  margin: 0 10px;
+  font-size: 24px;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #0073e6;
+}
+
+/* Footer Bottom */
+.footer-bottom {
+  margin-top: 30px;
+  font-size: 14px;
+  color: #999;
+}
+
+/* Back to Top Button */
+#backToTopBtn,
+.back-to-top-btn {
+  display: none;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: #0073e6;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 20px;
+  z-index: 1000;
+}
+
+#backToTopBtn:hover,
+.back-to-top-btn:hover {
+  background-color: #005bb5;
+}
+
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-right ul li {
+    display: block;
+    margin: 10px 0;
+  }
+}
