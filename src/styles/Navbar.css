@@ -2,40 +2,40 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: orangered;
-  padding: 1rem 2rem;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 1rem 3rem;
   position: fixed;
   width: 100%;
   top: 0;
   left: 0;
   z-index: 1000;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
 }
 
 .logo a {
-  color: white;
-  font-size: 1.5rem;
+  background: linear-gradient(135deg, #FF512F 0%, #DD2476 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 1.8rem;
   text-decoration: none;
-  font-weight: bold;
-  transition: color 0.3s ease, transform 0.2s ease;
-}
-
-.logo a:hover {
-  color: yellow;
-  transform: scale(1.1);
+  font-weight: 800;
+  letter-spacing: -0.5px;
 }
 
 .welcome-text h1 {
-  color: white;
-  font-size: 1.2rem;
+  color: #333;
+  font-size: 1.1rem;
   margin: 0;
   font-weight: 600;
+  opacity: 0.8;
 }
 
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 1.5rem;
+  gap: 2rem;
   margin: 0;
   padding: 0;
   align-items: center;
@@ -43,32 +43,49 @@
 
 .nav-links a {
   text-decoration: none;
-  color: white;
-  font-weight: bold;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
+  color: #555;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.5rem 0;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(135deg, #FF512F 0%, #DD2476 100%);
+  transition: width 0.3s ease;
 }
 
 .nav-links a:hover {
-  color: yellow;
-  transform: scale(1.1);
+  color: #DD2476;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
 }
 
 .logout-btn {
-  background: orange;
+  background: linear-gradient(135deg, #FF512F 0%, #DD2476 100%);
   color: white;
   border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
+  padding: 0.7rem 1.5rem;
+  border-radius: 50px;
   cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(221, 36, 118, 0.2);
 }
 
 .logout-btn:hover {
-  background-color: orangered;
-  transform: scale(1.05);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(221, 36, 118, 0.3);
 }
 
 @media (max-width: 768px) {
@@ -76,16 +93,11 @@
     flex-direction: column;
     padding: 1rem;
     gap: 1rem;
-    text-align: center;
-  }
-
-  .welcome-text h1 {
-    font-size: 1rem;
   }
 
   .nav-links {
-    flex-direction: column;
-    gap: 0.5rem;
-    text-align: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }

@@ -55,30 +55,23 @@ npm run dev
 ## 📁 Project Structure
 
 ```
+
 expense-tracker/
-├── public/              # Static assets
-├── src/
+├── backend/             # Django Backend
+│   ├── api/             # API App
+│   ├── config/          # Project Config
+│   ├── manage.py
+│   └── db.sqlite3
+├── src/                 # React Frontend
 │   ├── components/      # React components
-│   │   ├── Navbar.jsx
-│   │   ├── Footer.jsx
-│   │   ├── Home.jsx
-│   │   ├── Login.jsx
-│   │   ├── Signup.jsx
-│   │   ├── Dashboard.jsx
-│   │   └── Contact.jsx
 │   ├── styles/          # CSS modules
-│   │   ├── Navbar.css
-│   │   ├── Footer.css
-│   │   ├── Home.css
-│   │   ├── Auth.css
-│   │   ├── Dashboard.css
-│   │   └── Contact.css
-│   ├── App.jsx          # Main app component
-│   ├── main.jsx         # Entry point
-│   └── index.css        # Global styles
+│   ├── App.jsx
+│   └── main.jsx
+├── public/              # Static assets
 ├── index.html
 ├── package.json
 └── vite.config.js
+
 ```
 
 ## 🎯 Usage

@@ -1,242 +1,144 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import '../styles/Premium.css';
 
 function Premium() {
-  const [selectedPlan, setSelectedPlan] = useState(null);
-  const [paymentMethod, setPaymentMethod] = useState('');
   const navigate = useNavigate();
 
-  const plans = [
-    {
-      id: 'basic',
-      name: 'Basic',
-      price: 0,
-      features: [
-        'Track unlimited expenses',
-        'Basic categories',
-        'Monthly budget tracking',
-        'Expense history'
-      ]
-    },
-    {
-      id: 'pro',
-      name: 'Pro',
-      price: 299,
-      features: [
-        'Everything in Basic',
-        'Advanced analytics & charts',
-        'Custom categories',
-        'Export to Excel/PDF',
-        'Email notifications',
-        'Priority support'
-      ]
-    },
-    {
-      id: 'premium',
-      name: 'Premium',
-      price: 599,
-      features: [
-        'Everything in Pro',
-        'AI-powered insights',
-        'Multi-currency support',
-        'Recurring expense automation',
-        'Family sharing (up to 5 users)',
-        'Dedicated account manager',
-        'Custom reports'
-      ]
-    }
-  ];
-
-  const handleSelectPlan = (plan) => {
-    if (plan.price === 0) {
-      alert('You are already on the Basic plan!');
-      return;
-    }
-    setSelectedPlan(plan);
+  const loadRazorpay = (src) => {
+    return new Promise((resolve) => {
+      const script = document.createElement('script');
+      script.src = src;
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
   };
 
-  const handlePayment = (e) => {
-    e.preventDefault();
-    
-    if (!paymentMethod) {
-      alert('Please select a payment method');
+  const handlePayment = async () => {
+    const res = await loadRazorpay('https://checkout.razorpay.com/v1/checkout.js');
+
+    if (!res) {
+      alert('Razorpay SDK failed to load. Are you online?');
       return;
     }
 
-    // Simulate payment processing
-    // In production, replace this with actual payment gateway integration
-    // See PAYMENT_INTEGRATION_GUIDE.md for detailed instructions
-    
-    console.log('Payment Details:', {
-      plan: selectedPlan.name,
-      amount: selectedPlan.price,
-      method: paymentMethod,
-      timestamp: new Date().toISOString()
-    });
+    // Call Django Backend to create order
+    try {
+      const response = await fetch('http://localhost:8000/api/create-order/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ amount: 499 }), // Amount in INR
+      });
 
-    alert(`Processing payment of ₹${selectedPlan.price} via ${paymentMethod}...`);
-    
-    // Simulate API call delay
-    setTimeout(() => {
-      // In production, verify payment on backend before proceeding
-      const transactionId = 'TXN' + Date.now();
-      
-      // Store payment info
-      const paymentInfo = {
-        plan: selectedPlan.id,
-        planName: selectedPlan.name,
-        amount: selectedPlan.price,
-        method: paymentMethod,
-        transactionId: transactionId,
-        date: new Date().toISOString(),
-        status: 'success'
+      const order = await response.json();
+
+      if (order.error) {
+        alert(order.error);
+        return;
+      }
+
+      const options = {
+        key: 'rzp_test_RNh0qZpmrPFLcI', // Enter the Key ID generated from the Dashboard
+        amount: order.amount,
+        currency: order.currency,
+        name: 'Expense Tracker Premium',
+        description: 'Unlock Advanced AI Features',
+        order_id: order.id,
+        handler: async function (response) {
+          // Verify payment with backend
+          const verifyRes = await fetch('http://localhost:8000/api/verify-payment/', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+            }),
+          });
+
+          const verifyData = await verifyRes.json();
+
+          if (verifyData.status === 'Payment Verified') {
+            localStorage.setItem('userPlan', 'premium');
+            alert('Payment Successful! Welcome to Premium 🌟');
+            navigate('/dashboard');
+          } else {
+            alert('Payment Verification Failed');
+          }
+        },
+        prefill: {
+          name: 'User Name',
+          email: 'user@example.com',
+          contact: '9999999999',
+        },
+        theme: {
+          color: '#FFD700',
+        },
       };
-      
-      localStorage.setItem('userPlan', selectedPlan.id);
-      localStorage.setItem('paymentInfo', JSON.stringify(paymentInfo));
-      
-      alert(`Payment successful! Welcome to ${selectedPlan.name} plan!\nTransaction ID: ${transactionId}`);
-      navigate('/dashboard');
-    }, 1500);
+
+      const paymentObject = new window.Razorpay(options);
+      paymentObject.open();
+    } catch (error) {
+      console.error(error);
+      alert('Something went wrong with the payment server.');
+    }
   };
 
   return (
     <div>
       <Navbar />
       <div className="premium-container">
-        <div className="premium-header">
-          <h1>🌟 Upgrade to Premium</h1>
-          <p>Choose the perfect plan for your financial journey</p>
-        </div>
+        <div className="premium-card">
+          <div className="premium-header">
+            <h1>🚀 Go Premium</h1>
+            <p>Unlock the full power of AI for your finances</p>
+          </div>
 
-        <div className="plans-grid">
-          {plans.map((plan) => (
-            <div key={plan.id} className={`plan-card ${plan.id === 'pro' ? 'popular' : ''}`}>
-              {plan.id === 'pro' && <div className="popular-badge">Most Popular</div>}
-              <h2>{plan.name}</h2>
-              <div className="price">
-                <span className="currency">₹</span>
-                <span className="amount">{plan.price}</span>
-                <span className="period">/month</span>
+          <div className="features-list">
+            <div className="feature-item">
+              <span className="icon">🔮</span>
+              <div className="text">
+                <h3>Future Spending Forecast</h3>
+                <p>Predict your expenses for the next 30 days with AI.</p>
               </div>
-              <ul className="features-list">
-                {plan.features.map((feature, index) => (
-                  <li key={index}>✓ {feature}</li>
-                ))}
-              </ul>
-              <button 
-                className="select-btn"
-                onClick={() => handleSelectPlan(plan)}
-              >
-                {plan.price === 0 ? 'Current Plan' : 'Select Plan'}
-              </button>
             </div>
-          ))}
-        </div>
-
-        {selectedPlan && (
-          <div className="payment-modal">
-            <div className="payment-content">
-              <button className="close-btn" onClick={() => setSelectedPlan(null)}>×</button>
-              <h2>Complete Your Purchase</h2>
-              <div className="order-summary">
-                <h3>Order Summary</h3>
-                <p><strong>Plan:</strong> {selectedPlan.name}</p>
-                <p><strong>Amount:</strong> ₹{selectedPlan.price}/month</p>
+            <div className="feature-item">
+              <span className="icon">⚠️</span>
+              <div className="text">
+                <h3>Anomaly Detection</h3>
+                <p>Get alerted about unusual or suspicious spending.</p>
               </div>
-
-              <form onSubmit={handlePayment}>
-                <h3>Select Payment Method</h3>
-                
-                <div className="payment-options">
-                  <label className="payment-option">
-                    <input
-                      type="radio"
-                      name="payment"
-                      value="razorpay"
-                      onChange={(e) => setPaymentMethod(e.target.value)}
-                    />
-                    <div className="option-content">
-                      <strong>Razorpay</strong>
-                      <span>UPI, Cards, NetBanking, Wallets</span>
-                    </div>
-                  </label>
-
-                  <label className="payment-option">
-                    <input
-                      type="radio"
-                      name="payment"
-                      value="stripe"
-                      onChange={(e) => setPaymentMethod(e.target.value)}
-                    />
-                    <div className="option-content">
-                      <strong>Stripe</strong>
-                      <span>Credit/Debit Cards</span>
-                    </div>
-                  </label>
-
-                  <label className="payment-option">
-                    <input
-                      type="radio"
-                      name="payment"
-                      value="paypal"
-                      onChange={(e) => setPaymentMethod(e.target.value)}
-                    />
-                    <div className="option-content">
-                      <strong>PayPal</strong>
-                      <span>PayPal Balance or Cards</span>
-                    </div>
-                  </label>
-
-                  <label className="payment-option">
-                    <input
-                      type="radio"
-                      name="payment"
-                      value="paytm"
-                      onChange={(e) => setPaymentMethod(e.target.value)}
-                    />
-                    <div className="option-content">
-                      <strong>Paytm</strong>
-                      <span>Paytm Wallet & UPI</span>
-                    </div>
-                  </label>
-
-                  <label className="payment-option">
-                    <input
-                      type="radio"
-                      name="payment"
-                      value="phonepe"
-                      onChange={(e) => setPaymentMethod(e.target.value)}
-                    />
-                    <div className="option-content">
-                      <strong>PhonePe</strong>
-                      <span>UPI Payment</span>
-                    </div>
-                  </label>
-
-                  <label className="payment-option">
-                    <input
-                      type="radio"
-                      name="payment"
-                      value="googlepay"
-                      onChange={(e) => setPaymentMethod(e.target.value)}
-                    />
-                    <div className="option-content">
-                      <strong>Google Pay</strong>
-                      <span>UPI Payment</span>
-                    </div>
-                  </label>
-                </div>
-
-                <button type="submit" className="pay-btn">
-                  Pay ₹{selectedPlan.price}
-                </button>
-              </form>
+            </div>
+            <div className="feature-item">
+              <span className="icon">💡</span>
+              <div className="text">
+                <h3>Smart Budgeting</h3>
+                <p>Receive personalized budget recommendations.</p>
+              </div>
+            </div>
+            <div className="feature-item">
+              <span className="icon">📊</span>
+              <div className="text">
+                <h3>Advanced Analytics</h3>
+                <p>Interactive charts and deep dive into your data.</p>
+              </div>
             </div>
           </div>
-        )}
+
+          <div className="pricing-section">
+            <span className="price">₹499</span>
+            <span className="period">/ lifetime</span>
+          </div>
+
+          <button className="upgrade-btn" onClick={handlePayment}>
+            Upgrade Now
+          </button>
+        </div>
       </div>
     </div>
   );
