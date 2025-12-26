@@ -16,6 +16,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
     'api',
 ]
@@ -87,6 +88,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ALL_ORIGINS = True
 
-# Razorpay Keys
-RAZORPAY_KEY_ID = 'rzp_test_RNh0qZpmrPFLcI'
-RAZORPAY_KEY_SECRET = 'gyWUUP337T6kY15UMB2EDjKR'

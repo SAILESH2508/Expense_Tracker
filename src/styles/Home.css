@@ -1,48 +1,16 @@
-:root {
-  --primary-gradient: linear-gradient(135deg, #FF512F 0%, #DD2476 100%);
-  --secondary-gradient: linear-gradient(135deg, #FF9966 0%, #FF5E62 100%);
-  --glass-bg: rgba(255, 255, 255, 0.1);
-  --glass-border: 1px solid rgba(255, 255, 255, 0.2);
-  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  --text-color: #333;
-  --text-light: #fff;
-}
-
+/* Home.css */
 .home-container {
   min-height: 100vh;
   padding-top: 5rem;
-  background: var(--primary-gradient);
-  font-family: 'Inter', sans-serif;
+  /* Background handled by body in index.css */
 }
 
 .hero-section {
   padding: 8rem 2rem;
   text-align: center;
-  color: var(--text-light);
+  color: var(--text-dark);
   position: relative;
   overflow: hidden;
-}
-
-.hero-section::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
-  animation: rotate 20s linear infinite;
-  z-index: 0;
-}
-
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 .hero-content {
@@ -57,16 +25,19 @@
   margin-bottom: 1.5rem;
   font-weight: 800;
   letter-spacing: -1px;
-  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  animation: fadeInUp 0.8s ease-out;
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: fadeIn 0.8s ease-out;
 }
 
 .hero-subtitle {
   font-size: 1.5rem;
   margin-bottom: 3rem;
-  opacity: 0.9;
+  color: var(--text-light);
   font-weight: 300;
-  animation: fadeInUp 0.8s ease-out 0.2s backwards;
+  animation: fadeIn 0.8s ease-out 0.2s backwards;
 }
 
 .hero-buttons {
@@ -74,57 +45,25 @@
   gap: 1.5rem;
   justify-content: center;
   flex-wrap: wrap;
-  animation: fadeInUp 0.8s ease-out 0.4s backwards;
+  animation: fadeIn 0.8s ease-out 0.4s backwards;
 }
 
 .btn {
-  padding: 1rem 3rem;
-  border-radius: 50px;
   text-decoration: none;
-  font-weight: 700;
-  font-size: 1.1rem;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: inline-block;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.btn-primary {
-  background: white;
-  color: #DD2476;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-}
-
-.btn-primary:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-  background: #fff;
-}
-
-.btn-secondary {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  border: 2px solid rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(5px);
-}
-
-.btn-secondary:hover {
-  background: white;
-  color: #DD2476;
-  border-color: white;
-  transform: translateY(-5px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .features-grid {
   padding: 6rem 2rem;
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(10px);
 }
 
 .features-grid h2 {
   text-align: center;
   font-size: 3rem;
-  color: white;
+  color: var(--text-dark);
   margin-bottom: 4rem;
   font-weight: 700;
 }
@@ -138,51 +77,48 @@
 }
 
 .feature-card {
-  background: rgba(255, 255, 255, 0.9);
+  background: var(--glass-bg);
   padding: 2.5rem;
   border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
   text-align: center;
   transition: all 0.4s ease;
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 1px solid var(--glass-border);
 }
 
 .feature-card:hover {
-  transform: translateY(-15px) rotate(1deg);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  transform: translateY(-15px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  background: white;
 }
 
 .feature-icon {
   font-size: 3.5rem;
   margin-bottom: 1.5rem;
-  background: var(--secondary-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   display: inline-block;
 }
 
 .feature-card h3 {
-  color: #333;
+  color: var(--text-dark);
   margin-bottom: 1rem;
   font-size: 1.5rem;
   font-weight: 700;
 }
 
 .feature-card p {
-  color: #666;
+  color: var(--text-light);
   line-height: 1.7;
   font-size: 1.1rem;
 }
 
 .how-it-works {
   padding: 6rem 2rem;
-  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.2));
 }
 
 .how-it-works h2 {
   text-align: center;
   font-size: 3rem;
-  color: white;
+  color: var(--text-dark);
   margin-bottom: 4rem;
 }
 
@@ -197,23 +133,23 @@
 .step {
   text-align: center;
   padding: 2.5rem;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--glass-bg);
   backdrop-filter: blur(10px);
   border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid var(--glass-border);
   transition: transform 0.3s ease;
 }
 
 .step:hover {
   transform: translateY(-10px);
-  background: rgba(255, 255, 255, 0.15);
+  background: white;
 }
 
 .step-number {
   width: 70px;
   height: 70px;
-  background: white;
-  color: #DD2476;
+  background: var(--primary-gradient);
+  color: white;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -221,17 +157,17 @@
   font-size: 2rem;
   font-weight: 800;
   margin: 0 auto 1.5rem;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
 }
 
 .step h3 {
-  color: white;
+  color: var(--text-dark);
   margin-bottom: 1rem;
   font-size: 1.5rem;
 }
 
 .step p {
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--text-light);
   line-height: 1.6;
   font-size: 1.1rem;
 }
@@ -239,31 +175,37 @@
 .cta-section {
   padding: 8rem 2rem;
   text-align: center;
-  color: white;
-  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  /* color: var(--text-dark); */
 }
 
 .cta-section h2 {
   font-size: 3.5rem;
   margin-bottom: 1.5rem;
   font-weight: 800;
+  color: var(--text-dark);
 }
 
 .cta-section p {
   font-size: 1.5rem;
   margin-bottom: 3rem;
-  opacity: 0.9;
+  color: var(--text-light);
 }
 
 .btn-large {
   padding: 1.5rem 4rem;
   font-size: 1.3rem;
-  background: white;
-  color: #DD2476;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  background: var(--primary-gradient);
+  color: white;
+  border-radius: 50px;
+  box-shadow: 0 15px 35px rgba(255, 107, 107, 0.3);
 }
 
-@keyframes fadeInUp {
+.btn-large:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(255, 107, 107, 0.4);
+}
+
+@keyframes fadeIn {
   from {
     opacity: 0;
     transform: translateY(30px);

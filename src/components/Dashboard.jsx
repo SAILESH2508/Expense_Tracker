@@ -4,6 +4,7 @@ import Navbar from './Navbar';
 import '../styles/Dashboard.css';
 import { predictCategory, predictSpending, detectAnomalies, recommendBudget } from '../services/mlService';
 import ExpenseCharts from './ExpenseCharts';
+import { getExpenses, addExpense, deleteExpense } from '../services/api';
 
 function Dashboard() {
   const [budget, setBudget] = useState('');
@@ -24,16 +25,16 @@ function Dashboard() {
 
   useEffect(() => {
     // Check if user is logged in
-    if (!sessionStorage.getItem('loggedIn')) {
+    const token = localStorage.getItem('token');
+    if (!token) {
       alert('Please log in first!');
       navigate('/login');
       return;
     }
 
-    // Load saved data
+    // Load saved data (Budget/Salary still local for now as per plan, expenses from API)
     const savedBudget = localStorage.getItem('budget');
     const savedSalary = localStorage.getItem('salary');
-    const savedExpenses = JSON.parse(localStorage.getItem('expenses')) || [];
 
     if (savedBudget) {
       setBudgetDisplay(parseFloat(savedBudget));
@@ -41,8 +42,23 @@ function Dashboard() {
     if (savedSalary) {
       setSalaryDisplay(parseFloat(savedSalary));
     }
-    setExpenses(savedExpenses);
+
+    fetchExpenses();
   }, [navigate]);
+
+  const fetchExpenses = async () => {
+    try {
+      const data = await getExpenses();
+      // Validate data types to prevent rendering errors
+      const validExpenses = data.map(exp => ({
+        ...exp,
+        amount: Number(exp.amount) // Ensure amount is a number
+      }));
+      setExpenses(validExpenses);
+    } catch (error) {
+      console.error("Failed to fetch expenses", error);
+    }
+  };
 
   useEffect(() => {
     const updateForecast = async () => {
@@ -61,10 +77,6 @@ function Dashboard() {
     };
     updateForecast();
   }, [expenses]);
-
-  // Check if user has premium plan
-  const userPlan = localStorage.getItem('userPlan') || 'basic';
-  const isPremium = userPlan !== 'basic';
 
   const handleSetBudget = () => {
     if (!budget || isNaN(budget) || budget <= 0) {
@@ -90,7 +102,7 @@ function Dashboard() {
     setSalary('');
   };
 
-  const handleAddExpense = (e) => {
+  const handleAddExpense = async (e) => {
     e.preventDefault();
 
     if (!expenseForm.name || !expenseForm.amount || expenseForm.amount <= 0) {
@@ -98,32 +110,38 @@ function Dashboard() {
       return;
     }
 
-    const newExpense = {
-      id: Date.now(),
-      name: expenseForm.name,
-      amount: parseFloat(expenseForm.amount),
-      category: expenseForm.category,
-      date: new Date().toLocaleDateString()
-    };
+    try {
+      const newExpense = {
+        name: expenseForm.name,
+        amount: parseFloat(expenseForm.amount),
+        category: expenseForm.category,
+        date: new Date().toISOString().split('T')[0] // Send date as YYYY-MM-DD
+      };
 
-    const updatedExpenses = [...expenses, newExpense];
-    setExpenses(updatedExpenses);
-    localStorage.setItem('expenses', JSON.stringify(updatedExpenses));
-
-    alert('Expense added successfully!');
-    setExpenseForm({ name: '', amount: '', category: 'Food' });
+      await addExpense(newExpense);
+      alert('Expense added successfully!');
+      setExpenseForm({ name: '', amount: '', category: 'Food' });
+      fetchExpenses(); // Refresh list
+    } catch (error) {
+      console.error("Add Expense Error:", error);
+      alert("Failed to add expense.");
+    }
   };
 
-  const handleDeleteExpense = (id) => {
+  const handleDeleteExpense = async (id) => {
     if (confirm('Are you sure you want to delete this expense?')) {
-      const updatedExpenses = expenses.filter(exp => exp.id !== id);
-      setExpenses(updatedExpenses);
-      localStorage.setItem('expenses', JSON.stringify(updatedExpenses));
+      try {
+        await deleteExpense(id);
+        fetchExpenses();
+      } catch (error) {
+        console.error("Delete Error:", error);
+        alert("Failed to delete expense");
+      }
     }
   };
 
   const totalSpent = expenses.reduce((sum, exp) => sum + exp.amount, 0);
-  const remainingBudget = budgetDisplay - totalSpent;
+
   const currentSavings = salaryDisplay - totalSpent;
   const savingsRate = salaryDisplay > 0 ? ((currentSavings / salaryDisplay) * 100).toFixed(1) : 0;
 
@@ -131,13 +149,9 @@ function Dashboard() {
     <div>
       <Navbar />
       <div className="dashboard-container">
+
         <div className="dashboard-header">
-          <h1>💰 Financial Dashboard {isPremium && <span className="premium-badge">⭐ {userPlan.toUpperCase()}</span>}</h1>
-          {!isPremium && (
-            <p className="upgrade-prompt">
-              <a href="/premium">🚀 Upgrade to Premium for advanced features!</a>
-            </p>
-          )}
+          <h1>💰 Financial Dashboard</h1>
           <div className="view-toggle">
             <button
               className={view === 'add' ? 'active' : ''}
@@ -261,49 +275,40 @@ function Dashboard() {
               )}
             </div>
 
-            {/* AI Insights Section - Premium Only */}
-            {isPremium ? (
-              (anomalies.length > 0 || recommendedBudget) && (
-                <div className="ai-insights-section">
-                  <h2>🤖 Advanced AI Insights</h2>
-                  <div className="insights-grid">
-                    {recommendedBudget && (
-                      <div className="insight-card recommendation">
-                        <h3>💡 Smart Budget</h3>
-                        <p>Based on your spending, we recommend a monthly budget of:</p>
-                        <p className="highlight-amount">₹{recommendedBudget}</p>
-                        <button onClick={() => {
-                          setBudget(recommendedBudget);
-                          setBudgetDisplay(recommendedBudget);
-                          localStorage.setItem('budget', recommendedBudget);
-                          alert('Budget updated to recommendation!');
-                        }}>Apply Recommendation</button>
-                      </div>
-                    )}
-
-                    {anomalies.length > 0 && (
-                      <div className="insight-card anomalies">
-                        <h3>⚠️ Unusual Spending</h3>
-                        <p>We detected {anomalies.length} potential outliers:</p>
-                        <ul>
-                          {anomalies.map(a => (
-                            <li key={a.id}>{a.name}: ₹{a.amount} ({a.category})</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )
-            ) : (
-              <div className="premium-lock-section">
+            {/* AI Insights Section - Available to All */}
+            {(anomalies.length > 0 || recommendedBudget) && (
+              <div className="ai-insights-section">
                 <h2>🤖 Advanced AI Insights</h2>
-                <div className="lock-overlay">
-                  <p>🔒 Upgrade to Premium to unlock Smart Budgeting and Anomaly Detection!</p>
-                  <a href="/premium" className="unlock-btn">Unlock Now</a>
+                <div className="insights-grid">
+                  {recommendedBudget && (
+                    <div className="insight-card recommendation">
+                      <h3>💡 Smart Budget</h3>
+                      <p>Based on your spending, we recommend a monthly budget of:</p>
+                      <p className="highlight-amount">₹{recommendedBudget}</p>
+                      <button onClick={() => {
+                        setBudget(recommendedBudget);
+                        setBudgetDisplay(recommendedBudget);
+                        localStorage.setItem('budget', recommendedBudget);
+                        alert('Budget updated to recommendation!');
+                      }}>Apply Recommendation</button>
+                    </div>
+                  )}
+
+                  {anomalies.length > 0 && (
+                    <div className="insight-card anomalies">
+                      <h3>⚠️ Unusual Spending</h3>
+                      <p>We detected {anomalies.length} potential outliers:</p>
+                      <ul>
+                        {anomalies.map(a => (
+                          <li key={a.id}>{a.name}: ₹{a.amount} ({a.category})</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
+
 
             {/* Charts Section - Available to All */}
             <div className="charts-section">

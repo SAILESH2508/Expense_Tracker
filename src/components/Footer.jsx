@@ -31,7 +31,7 @@ function Footer() {
           <div className="footer-left">
             <h3>Expense Tracker</h3>
             <p>Helping you manage your daily expenses smarter and easier.</p>
-            
+
             <div className="social-icons">
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" title="Facebook">
                 <i className="fab fa-facebook-f"></i>
@@ -63,7 +63,7 @@ function Footer() {
               <li><a href="/login">Login</a></li>
               <li><a href="/signup">Sign Up</a></li>
               <li><a href="/contact">Contact</a></li>
-              <li><a href="/premium">Premium</a></li>
+
             </ul>
           </div>
         </div>
@@ -74,9 +74,9 @@ function Footer() {
       </footer>
 
       {/* Back to Top Button */}
-      <button 
-        onClick={scrollToTop} 
-        id="backToTopBtn" 
+      <button
+        onClick={scrollToTop}
+        id="backToTopBtn"
         title="Go to top"
         className="back-to-top-btn"
       >

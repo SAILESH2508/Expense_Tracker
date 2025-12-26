@@ -1,34 +1,35 @@
+/* Auth.css */
 .auth-container {
   min-height: 100vh;
   padding: 8rem 2rem 4rem;
-  background: linear-gradient(135deg, #FF512F 0%, #DD2476 100%);
-  font-family: 'Inter', sans-serif;
+  /* Background handled by body in index.css */
 }
 
 .info-section {
   max-width: 800px;
   margin: 0 auto 3rem;
-  background: rgba(255, 255, 255, 0.9);
+  background: var(--glass-bg);
   backdrop-filter: blur(10px);
   padding: 2.5rem;
   border-radius: 20px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: var(--glass-shadow);
+  border: 1px solid var(--glass-border);
   animation: slideDown 0.6s ease-out;
 }
 
 .info-section h1 {
-  color: #333;
+  color: var(--text-dark);
   margin-bottom: 1.5rem;
   font-size: 2.2rem;
   font-weight: 800;
-  background: linear-gradient(135deg, #FF512F 0%, #DD2476 100%);
+  background: var(--primary-gradient);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .info-section p {
-  color: #555;
+  color: var(--text-light);
   line-height: 1.8;
   font-size: 1.1rem;
 }
@@ -36,16 +37,17 @@
 .auth-form-container {
   max-width: 450px;
   margin: 0 auto;
-  background: white;
+  background: var(--glass-bg);
   padding: 3rem;
   border-radius: 25px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--glass-border);
   animation: fadeIn 0.8s ease-out;
 }
 
 .auth-form-container h1 {
   text-align: center;
-  color: #333;
+  color: var(--text-dark);
   margin-bottom: 2.5rem;
   font-size: 2rem;
   font-weight: 700;
@@ -57,7 +59,7 @@
 }
 
 .auth-form-container label {
-  color: #444;
+  color: var(--text-dark);
   font-weight: 600;
   margin-bottom: 0.5rem;
   margin-top: 1.2rem;
@@ -66,24 +68,24 @@
 
 .auth-form-container input {
   padding: 1rem;
-  border: 2px solid #eee;
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 12px;
   font-size: 1rem;
   transition: all 0.3s ease;
-  background: #f9f9f9;
+  background: rgba(255, 255, 255, 0.8);
 }
 
 .auth-form-container input:focus {
   outline: none;
-  border-color: #DD2476;
+  border-color: #FF6B6B;
   background: white;
-  box-shadow: 0 0 0 4px rgba(221, 36, 118, 0.1);
+  box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.1);
 }
 
 .auth-form-container button {
   margin-top: 2rem;
   padding: 1.2rem;
-  background: linear-gradient(135deg, #FF512F 0%, #DD2476 100%);
+  background: var(--primary-gradient);
   color: white;
   border: none;
   border-radius: 12px;
@@ -91,25 +93,25 @@
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 10px 20px rgba(221, 36, 118, 0.2);
+  box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
 }
 
 .auth-form-container button:hover {
   transform: translateY(-3px);
-  box-shadow: 0 15px 30px rgba(221, 36, 118, 0.3);
+  box-shadow: 0 15px 30px rgba(255, 107, 107, 0.4);
 }
 
 .secondary-btn {
   background: transparent !important;
-  border: 2px solid #eee !important;
-  color: #666 !important;
+  border: 1px solid var(--glass-border) !important;
+  color: var(--text-light) !important;
   box-shadow: none !important;
   margin-top: 1rem !important;
 }
 
 .secondary-btn:hover {
-  border-color: #DD2476 !important;
-  color: #DD2476 !important;
+  border-color: #FF6B6B !important;
+  color: #FF6B6B !important;
   background: white !important;
 }
 
@@ -125,23 +127,24 @@
   text-align: center;
   margin-top: 2rem;
   font-size: 1rem;
-  color: #888;
+  color: var(--text-light);
   font-weight: 400;
 }
 
 .features-section {
   max-width: 800px;
   margin: 4rem auto;
-  background: rgba(255, 255, 255, 0.9);
+  background: var(--glass-bg);
   backdrop-filter: blur(10px);
   padding: 3rem;
   border-radius: 20px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--glass-shadow);
+  border: 1px solid var(--glass-border);
   animation: slideUp 0.8s ease-out;
 }
 
 .features-section h1 {
-  color: #333;
+  color: var(--text-dark);
   margin-bottom: 2rem;
   font-size: 2rem;
   text-align: center;
@@ -156,7 +159,7 @@
 }
 
 .features-section li {
-  color: #555;
+  color: var(--text-light);
   padding: 1rem;
   font-size: 1rem;
   line-height: 1.6;
@@ -169,7 +172,7 @@
 }
 
 .features-section li strong {
-  color: #DD2476;
+  color: #FF6B6B;
 }
 
 @keyframes slideDown {

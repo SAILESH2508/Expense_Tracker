@@ -42,13 +42,7 @@ const TRAINING_DATA = [
 // Map categories to indices
 const CATEGORIES = ['Food', 'Transport', 'Bills', 'Shopping', 'Entertainment', 'Healthcare', 'Others'];
 
-// Simple bag-of-words vectorizer
-function vectorize(text) {
-    const words = text.toLowerCase().split(/\s+/);
-    // This is a very simplified vectorizer for demonstration
-    // In a real app, we'd use a proper vocabulary
-    return words;
-}
+
 
 export const predictCategory = async (description) => {
     if (!description) return null;
