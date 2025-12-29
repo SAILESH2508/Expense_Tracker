@@ -23,26 +23,77 @@ A modern, responsive expense tracking application built with React and Vite. Man
 
 - Node.js (v14 or higher)
 - npm or yarn
+- Python 3.8+ (for backend)
+- Django 4.0+ (for backend)
 
 ### Installation
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/expense-tracker.git
-cd expense-tracker
+git clone https://github.com/SAILESH2508/Expense_Tracker.git
+cd Expense_Tracker
 ```
 
-2. Install dependencies:
+2. Install frontend dependencies:
 ```bash
 npm install
 ```
 
-3. Start the development server:
+3. Set up environment variables:
+```bash
+cp .env.example .env
+# Edit .env with your configuration
+```
+
+4. Install backend dependencies:
+```bash
+cd backend
+pip install django djangorestframework django-cors-headers
+```
+
+5. Run database migrations:
+```bash
+python manage.py migrate
+```
+
+6. Start the backend server:
+```bash
+python manage.py runserver
+```
+
+7. In a new terminal, start the frontend development server:
 ```bash
 npm run dev
 ```
 
-4. Open your browser and navigate to `http://localhost:5173`
+8. Open your browser and navigate to `http://localhost:5173`
+
+## 🌐 Deployment
+
+This project is configured for deployment to GitHub Pages using GitHub Actions.
+
+### Automatic Deployment
+
+The project automatically deploys to GitHub Pages when you push to the main branch. The workflow:
+
+1. Builds the React application
+2. Uploads the build artifacts
+3. Deploys to GitHub Pages
+
+### Manual Deployment
+
+To deploy manually:
+
+```bash
+npm run build
+# The dist/ folder contains the built application
+```
+
+### Environment Configuration
+
+- Copy `.env.example` to `.env` for local development
+- Update `VITE_API_BASE_URL` to point to your backend API
+- For production, configure your backend URL accordingly
 
 ## 🛠️ Built With
 

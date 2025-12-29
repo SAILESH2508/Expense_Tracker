@@ -4,6 +4,11 @@
   "version": "1.0.0",
   "type": "module",
   "description": "A modern expense tracking application built with React and Vite",
+  "homepage": "https://sailesh2508.github.io/Expense_Tracker",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SAILESH2508/Expense_Tracker.git"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",

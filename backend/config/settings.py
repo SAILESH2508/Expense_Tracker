@@ -6,7 +6,7 @@ SECRET_KEY = 'django-insecure-change-me-in-production'
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']  # Allow all hosts for development, configure properly for production
 
 INSTALLED_APPS = [
     'django.contrib.admin',
